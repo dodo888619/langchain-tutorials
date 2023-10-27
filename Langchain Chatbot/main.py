@@ -45,8 +45,7 @@ textcontainer = st.container()
 
 
 with textcontainer:
-    query = st.text_input("Query: ", key="input")
-    if query:
+    if query := st.text_input("Query: ", key="input"):
         with st.spinner("typing..."):
             conversation_string = get_conversation_string()
             # st.code(conversation_string)
@@ -57,13 +56,13 @@ with textcontainer:
             # print(context)  
             response = conversation.predict(input=f"Context:\n {context} \n\n Query:\n{query}")
         st.session_state.requests.append(query)
-        st.session_state.responses.append(response) 
+        st.session_state.responses.append(response)
 with response_container:
     if st.session_state['responses']:
 
         for i in range(len(st.session_state['responses'])):
             message(st.session_state['responses'][i],key=str(i))
             if i < len(st.session_state['requests']):
-                message(st.session_state["requests"][i], is_user=True,key=str(i)+ '_user')
+                message(st.session_state["requests"][i], is_user=True, key=f'{str(i)}_user')
 
           
